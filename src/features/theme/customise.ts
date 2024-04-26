@@ -1,1 +1,1 @@
-export const AI_NAME = "日本マイクロニクスGPT";
+export const AI_NAME = "SampleGPT";
