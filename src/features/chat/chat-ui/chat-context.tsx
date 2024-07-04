@@ -8,6 +8,8 @@ import {
   ChatMessageModel,
   ChatThreadModel,
   ChatType,
+  ChatDoc,
+  ChatAPIModel,
   ConversationStyle,
   PromptGPTBody,
 } from "../chat-services/models";
@@ -28,6 +30,8 @@ interface ChatContextProps extends UseChatHelpers {
   chatBody: PromptGPTBody;
   fileState: FileState;
   onChatTypeChange: (value: ChatType) => void;
+  onChatDocChange: (value: ChatDoc) => void;
+  onChatAPIModelChange: (value: ChatAPIModel) => void;
   onConversationStyleChange: (value: ConversationStyle) => void;
   speech: TextToSpeechProps & SpeechToTextProps;
 }
@@ -56,6 +60,8 @@ export const ChatProvider: FC<Prop> = (props) => {
   const [chatBody, setBody] = useState<PromptGPTBody>({
     id: props.chatThread.id,
     chatType: props.chatThread.chatType,
+    chatDoc:props.chatThread.chatDoc,
+    chatAPIModel: props.chatThread.chatAPIModel,
     conversationStyle: props.chatThread.conversationStyle,
     chatOverFileName: props.chatThread.chatOverFileName,
   });
@@ -87,8 +93,17 @@ export const ChatProvider: FC<Prop> = (props) => {
     setChatBody({ ...chatBody, chatType: value });
   };
 
+  const onChatDocChange = (value: ChatDoc) => {
+    setChatBody({ ...chatBody, chatDoc: value });
+  };
+
+
   const onConversationStyleChange = (value: ConversationStyle) => {
     setChatBody({ ...chatBody, conversationStyle: value });
+  };
+
+  const onChatAPIModelChange = (value: ChatAPIModel) => {
+    setChatBody({ ...chatBody, chatAPIModel: value });
   };
 
   function onError(error: Error) {
@@ -102,6 +117,8 @@ export const ChatProvider: FC<Prop> = (props) => {
         setChatBody,
         chatBody,
         onChatTypeChange,
+        onChatDocChange,
+        onChatAPIModelChange,
         onConversationStyleChange,
         fileState,
         id: props.id,

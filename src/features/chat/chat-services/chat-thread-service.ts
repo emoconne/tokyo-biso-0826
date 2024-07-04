@@ -10,6 +10,7 @@ import { deleteDocuments } from "./azure-cog-search/azure-cog-vector-store";
 import { FindAllChatDocuments } from "./chat-document-service";
 import {
   CHAT_THREAD_ATTRIBUTE,
+  ChatAPIModel,
   ChatMessageModel,
   ChatThreadModel,
   ChatType,
@@ -22,7 +23,7 @@ export const FindAllChatThreadForCurrentUser = async () => {
 
   const querySpec: SqlQuerySpec = {
     query:
-      "SELECT * FROM root r WHERE r.type=@type AND r.userId=@userId AND r.isDeleted=@isDeleted ORDER BY r.createdAt DESC",
+    "SELECT * FROM root r WHERE r.type=@type AND r.userId=@userId AND r.isDeleted=@isDeleted ORDER BY r.createdAt DESC",
     parameters: [
       {
         name: "@type",
@@ -148,6 +149,7 @@ export const updateChatThreadTitle = async (
   messages: ChatMessageModel[],
   chatType: ChatType,
   conversationStyle: ConversationStyle,
+  chatAPIModel: ChatAPIModel,
   chatOverFileName: string,
   userMessage: string
 ) => {
@@ -156,6 +158,7 @@ export const updateChatThreadTitle = async (
       ...chatThread,
       chatType: chatType,
       chatOverFileName: chatOverFileName,
+      chatAPIModel: chatAPIModel,
       conversationStyle: conversationStyle,
       name: userMessage.substring(0, 30),
     });
@@ -175,9 +178,11 @@ export const CreateChatThread = async () => {
     createdAt: new Date(),
     isDeleted: false,
     chatType: "simple",
-    conversationStyle: "precise",
+    conversationStyle: "balanced",
+    chatAPIModel: "GPT-3",
     type: CHAT_THREAD_ATTRIBUTE,
     chatOverFileName: "",
+    chatDoc: "DeptA"
   };
 
   const container = await CosmosDBContainer.getInstance().getContainer();
@@ -186,7 +191,7 @@ export const CreateChatThread = async () => {
 };
 
 export const initAndGuardChatSession = async (props: PromptGPTProps) => {
-  const { messages, id, chatType, conversationStyle, chatOverFileName } = props;
+  const { messages, id, chatType, conversationStyle,chatAPIModel, chatOverFileName } = props;
 
   //last message
   const lastHumanMessage = messages[messages.length - 1];
@@ -199,6 +204,7 @@ export const initAndGuardChatSession = async (props: PromptGPTProps) => {
     chats,
     chatType,
     conversationStyle,
+    chatAPIModel,
     chatOverFileName,
     lastHumanMessage.content
   );

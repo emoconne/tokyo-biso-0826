@@ -17,7 +17,9 @@ export interface ChatMessageModel {
 }
 
 export type ConversationStyle = "creative" | "balanced" | "precise";
-export type ChatType = "simple" | "web" | "document" | "data" | "mssql";
+export type ChatType = "simple" | "web" | "document" | "data" | "doc" | "mssql";
+export type ChatAPIModel = "GPT-3" | "GPT-4";
+export type ChatDoc = "DeptA" | "DeptB" | "DeptC" | "DeptD" ;
 
 export type ChatRole = "system" | "user" | "assistant" | "function";
 
@@ -29,7 +31,9 @@ export interface ChatThreadModel {
   useName: string;
   isDeleted: boolean;
   chatType: ChatType;
+  chatDoc: ChatDoc;
   conversationStyle: ConversationStyle;
+  chatAPIModel: ChatAPIModel;
   chatOverFileName: string;
   type: "CHAT_THREAD";
 }
@@ -37,7 +41,9 @@ export interface ChatThreadModel {
 export interface PromptGPTBody {
   id: string; // thread id
   chatType: ChatType;
+  chatDoc: ChatDoc;
   conversationStyle: ConversationStyle;
+  chatAPIModel:ChatAPIModel;
   chatOverFileName: string;
 }
 

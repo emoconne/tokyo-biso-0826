@@ -18,7 +18,7 @@ export const StartNewChat: FC<Prop> = (props) => {
         </Typography>
         <div className="flex flex-col gap-2">
           <p className="">
-          このChatGPT搭載のAIチャットボットは、2024年1月からプレビューで社内利用限定で公開されています。
+          このChatGPT搭載のAIチャットボットは、社内利用限定で公開されています。
             まだまだ未熟なAIですが、皆様のご協力により、AIの成長を目指しています。
 
           </p>
