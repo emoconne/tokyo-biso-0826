@@ -17,6 +17,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { CheckIcon, ClipboardIcon, UserCircle } from "lucide-react";
 import { stringify } from "querystring";
+import { title } from "process";
 
 
 //const [promptTitle, setPromptTitle] = useState();
@@ -66,6 +67,7 @@ const ChatPromptEmptyState: FC<Props> = (props) => {
     setDept("company");
     setPromptId(0);
 
+    alert(promptTitle);
 /*    setPromptTitle(prompt[id].title);
     setPromptContent(prompt[id].content);
     setDept(prompt[id].dept);
@@ -119,7 +121,7 @@ const ChatPromptEmptyState: FC<Props> = (props) => {
           <List component="div" disablePadding>
             <ListItemButton sx={{ pl: 4 }}>
 
-              <ListItemText primary="取引先にメールする" onClick={() => listClick("取引先にメールする",mail)}/>
+              <ListItemText primary="取引先にメールする" onClick={(event: React.MouseEvent<HTMLDivElement>) => listClick("取引先にメールする", mail)} />
             </ListItemButton>
           </List>            
           </Collapse>           
