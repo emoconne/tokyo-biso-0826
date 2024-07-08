@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { FC } from "react";
 import { useChatContext } from "../chat-context";
 import { ChatFileUI } from "../chat-file/chat-file-ui";
+import { ChatFileUI_doc } from "../chat-file/chat-file-ui-doc";
 import { ChatStyleSelector } from "./chat-style-selector";
 import { ChatTypeSelector } from "./chat-type-selector";
 import { ChatAPISelector } from "./chat-api-selector";
@@ -49,8 +50,9 @@ export const ChatMessageEmptyState: FC<Prop> = (props) => {
           </p>
           <ChatTypeSelector disable={false} />
         </div>
-        {showFileUpload === "data" && <ChatFileUI />}
-
+        {(showFileUpload === "data") && <ChatFileUI />} 
+        {((showFileUpload === "doc") && session?.user?.isAdmin) && <ChatFileUI_doc />} 
+        
       </Card>
     </div>
   );

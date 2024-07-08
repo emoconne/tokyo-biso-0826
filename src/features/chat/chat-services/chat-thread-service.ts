@@ -182,7 +182,7 @@ export const CreateChatThread = async () => {
     chatAPIModel: "GPT-3",
     type: CHAT_THREAD_ATTRIBUTE,
     chatOverFileName: "",
-    chatDoc: "DeptA"
+    chatDoc: ""
   };
 
   const container = await CosmosDBContainer.getInstance().getContainer();

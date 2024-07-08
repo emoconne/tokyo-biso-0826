@@ -36,6 +36,14 @@ export const ChatAPIData = async (props: PromptGPTProps) => {
   const openAI = OpenAIInstance();
 
   const userId = await userHashedId();
+  let chatAPIModel = "";
+  if (props.chatAPIModel === "GPT-3") {
+    chatAPIModel = "gpt-35-turbo-16k";
+  }else{
+    chatAPIModel = "gpt-4o";
+  }
+//  console.log("Model_data: ", process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME);
+//  console.log("PromptGPTProps_data: ", props.chatAPIModel);
 
   const chatHistory = new CosmosDBChatMessageHistory({
     sessionId: chatThread.id,
@@ -74,7 +82,8 @@ export const ChatAPIData = async (props: PromptGPTProps) => {
           }),
         },
       ],
-      model: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      //model: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      model: chatAPIModel,
       stream: true,
     });
 
@@ -113,7 +122,7 @@ export const ChatAPIData = async (props: PromptGPTProps) => {
 
 const findRelevantDocuments = async (query: string, chatThreadId: string) => {
   const relevantDocuments = await similaritySearchVectorWithScore(query, 10, {
-    filter: `user eq '${await userHashedId()}' and chatThreadId eq '${chatThreadId}'`,
+    filter: `user eq '${await userHashedId()}' and chatThreadId eq '${chatThreadId}' and chatType eq 'data'`,
   });
   return relevantDocuments;
 };

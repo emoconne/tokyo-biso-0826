@@ -15,18 +15,13 @@ interface Prop {
 
 export const ChatAPISelector: FC<Prop> = (props) => {
   const { chatBody, onChatAPIModelChange } = useChatContext();
-
-
-
-  //let count = 0;
   const [gptModel, setGPTModel] = useState(0);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    //setCount(count + 1);
-    //count = count + 1;
-  }
+
+  
   const { data: session } = useSession();
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(chatBody.chatAPIModel === "GPT-3" ? false : true);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
     if (checked) {
@@ -43,6 +38,7 @@ export const ChatAPISelector: FC<Prop> = (props) => {
           checked={checked}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'controlled' }}
+          disabled={props.disable}
         />
       } label=""　
        />

@@ -20,6 +20,15 @@ export const ChatAPIWeb = async (props: PromptGPTProps) => {
 
   const userId = await userHashedId();
 
+  let chatAPIModel = "";
+  if (props.chatAPIModel === "GPT-3") {
+    chatAPIModel = "gpt-35-turbo-16k";
+  }else{
+    chatAPIModel = "gpt-4o";
+  }
+//  console.log("Model_web: ", process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME);
+//  console.log("PromptGPTProps_web: ", props.chatAPIModel);
+
   const bing = new BingSearchResult();
   const searchResult = await bing.SearchWeb(lastHumanMessage.content);
 
@@ -90,11 +99,12 @@ export const ChatAPIWeb = async (props: PromptGPTProps) => {
           role: "user",
           content: Prompt,
         }
-        //...topHistory,
       ],
-      model: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      //model: process.env.AZURE_OPENAI_API_DEPLOYMENT_NAME,
+      model: chatAPIModel,
       stream: true,
     });
+
 
     const stream = OpenAIStream(response, {
       async onCompletion(completion) {
