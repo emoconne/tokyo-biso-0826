@@ -38,6 +38,18 @@ export interface ChatThreadModel {
   type: "CHAT_THREAD";
 }
 
+export interface PromptModel {
+  id: string; 
+  createdAt: Date;
+  userId: string;
+  useName: string;
+  isDeleted: boolean;
+  threadId: string;
+  title: string;
+  content: string;
+  dept: string;
+}
+
 export interface PromptGPTBody {
   id: string; // thread id
   chatType: ChatType;
@@ -46,6 +58,7 @@ export interface PromptGPTBody {
   chatAPIModel:ChatAPIModel;
   chatOverFileName: string;
 }
+
 
 export interface PromptGPTProps extends PromptGPTBody {
   messages: Message[];
