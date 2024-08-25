@@ -33,7 +33,7 @@ export const ChatMessageEmptyState: FC<Prop> = (props) => {
 
           <div className="flex flex-col gap-2">
           <p className="text-sm text-muted-foreground">
-            GPT-4oの利用を選択してください。
+          選択するとGPT-3.5からGPT-4oに切り替わります
             <ChatAPISelector disable={false} />
           </p>
           </div>
